@@ -7,6 +7,8 @@ exports.ConnectDB = async()=>{
         console.log(`the app is connected to ${mongoose.connection.host}`);
     } catch (error) {
             mongoose.disconnect();
+            console.log(PUBLIC_DATA.mongo_uri)
+            console.log("MONGOOSE CONNECTION ERROR: ",error)
             process.exit(1)
     }
 }

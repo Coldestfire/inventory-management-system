@@ -4,9 +4,6 @@ class ApiError extends Error{
         super(msg)
         this.message = msg
         this.statusCode  = statusCode;
-
-        // Error.
-
     }
 }
 
