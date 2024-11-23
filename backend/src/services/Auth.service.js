@@ -3,11 +3,12 @@ const { UserModel,ProfileModel } = require("../models")
 const ApiError = require("../utils/ApiError")
 const { generatoken } = require("../utils/Token.utils")
 const axios =  require("axios");
+const bcrypt = require('bcryptjs');
 class AuthService{
        static  async RegisterUser(body){
 
-                const {email,password,name,token} = body
-
+                const {email,password,name} = body
+                // ,token
 
                 // const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
                 //     params:{
@@ -16,12 +17,12 @@ class AuthService{
                 // }
                 // })
 
-                // const data =await response.data;
+                const data =await response.data;
 
-                // if(!data.success){
+                if(!data.success){
 
-                //         throw new ApiError(httpStatus.BAD_REQUEST,"Captcha Not Valid")
-                // }
+                        throw new ApiError(400,"Captcha Not Valid")
+                }
 
 
                 const checkExist = await UserModel.findOne({email})
@@ -30,7 +31,12 @@ class AuthService{
                     return
                 }
 
-            const user = await UserModel.create({
+                //encrypt password
+                const salt = await bcrypt.genSalt()
+
+
+                //creating new user
+                const user = await UserModel.create({
                     email,password,name
                 })
 
@@ -49,7 +55,8 @@ class AuthService{
 
        }
         static  async LoginUser(body){
-        const {email,password,name,token} = body
+        const {email,password} = body
+        // ,name,token
 
         
                 // const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{

@@ -1,22 +1,17 @@
+// Validation.js
 const { validationResult } = require("express-validator");
 const ApiError = require("../utils/ApiError");
-const httpStatus = require("http-status");
 
-const Validation = (req,res,next)=>{
-            try {
-                        const result = validationResult(req);
+const Validation = (req, res, next) => {
+  const errors = validationResult(req);
 
-                                if(!result.isEmpty()){
-                                        throw new ApiError(httpStatus.BAD_REQUEST,result.array()[0].msg)
+  if (!errors.isEmpty()) {
+    // Collect all error messages in a user-friendly format
+    const errorMessages = errors.array().map((err) => err.msg);
+    throw new ApiError(400, errorMessages.join(', ')); // Joining errors into a single message
+  }
+  
+  next(); // Proceed if no validation errors
+};
 
-                                    return
-                                }
-
-                                next()
-
-            } catch (error) {
-                    next(error)
-            }
-}
-
-module.exports =Validation
+module.exports = Validation;
