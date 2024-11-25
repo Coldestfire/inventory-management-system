@@ -15,6 +15,9 @@ export default {
         tertiary: pagestyle.tertiary,
         accent: pagestyle.accent,
       },
+      fontFamily: {
+        stylish: ['stylish', 'sans-serif'],
+      },
     },
   },
   plugins: [],

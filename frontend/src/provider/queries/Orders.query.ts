@@ -6,6 +6,7 @@ export const OrdersApi = createApi({
     tagTypes: ['getAllOrders'],
     endpoints: (builder) => ({
         CreateOrder: builder.mutation<any, any>({
+            
             query: (obj) => ({
                 url: '/orders/create-order',
                 method: 'POST',

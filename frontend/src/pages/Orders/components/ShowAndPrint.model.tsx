@@ -6,7 +6,7 @@ import Barcode from 'react-barcode';
 import { usePDF } from 'react-to-pdf';
 
 const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
-  const { data, isLoading, isError, isFetching } = useGetInvoiceByIdQuery(id);  // Fetch order details
+  const { data, isLoading, isError, isFetching } = useGetInvoiceByIdQuery(id); // Fetch order details
 
   const { toPDF, targetRef } = usePDF();
 
@@ -23,11 +23,12 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
     name: string;
     id: string;
     price: number;
+    quantity: number;
   };
 
-  // Calculate the total price
-  const totalPrice = data.items && data.items.length > 0
-    ? data.items.map((item: OrderDoc) => item.price).reduce((a: number, b: number) => a + b, 0)
+  // Calculate the overall total price
+  const grandTotal = data.items && data.items.length > 0
+    ? data.items.map((item: OrderDoc) => item.price * item.quantity).reduce((a: number, b: number) => a + b, 0)
     : 0;
 
   return (
@@ -60,6 +61,8 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
                   <th className="border py-2">ID</th>
                   <th className="border py-2">Item</th>
                   <th className="border py-2">Price (in &#8377;)</th>
+                  <th className="border py-2">Quantity</th>
+                  <th className="border py-2">Total Price (in &#8377;)</th>
                 </tr>
               </thead>
 
@@ -70,15 +73,19 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
                       <td className="border text-center py-2">{i + 1}</td>
                       <td className="border text-center py-2 capitalize">{item.name}</td>
                       <td className="border text-center py-2">&#8377; {item.price}</td>
+                      <td className="border text-center py-2">{item.quantity}</td>
+                      <td className="border text-center py-2">
+                        &#8377; {item.price * item.quantity}
+                      </td>
                     </tr>
                   ))
                 }
               </tbody>
               <tfoot>
                 <tr>
-                  <th colSpan={2} className="border capitalize text-center py-2">Total</th>
+                  <th colSpan={4} className="border capitalize text-center py-2">Grand Total</th>
                   <th className="border capitalize text-center py-2">
-                    &#8377; {totalPrice} /-
+                    &#8377; {grandTotal} /-
                   </th>
                 </tr>
               </tfoot>

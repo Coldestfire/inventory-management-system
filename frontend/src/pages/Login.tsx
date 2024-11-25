@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { useLoginUserMutation } from '../provider/queries/Auth.query'
 import { toast } from 'sonner'
+import { motion } from 'framer-motion';
 // import ReCAPTCHA from "react-google-recaptcha";
 const Login = () => {
 const [LoginUser,LoginUserResponse] = useLoginUserMutation()
@@ -67,7 +68,25 @@ const navigate = useNavigate()
 
     <>
 
-      <div className='min-h-screen flex items-center justify-center w-full bg-primary'>
+      <div className='min-h-screen flex flex-col items-center justify-center w-full bg-primary'>
+      <motion.h1 className="text-9xl text-[#5B4636] mb-3 tracking-wide font-stylish"
+      initial={{ opacity: 0, y: -30 }} // Start above and invisible
+      animate={{ opacity: 1, y: 0 }} // Animate to original position
+      transition={{ duration: 1 }} // Set duration for smooth transition
+      >
+       Caffy
+      </motion.h1>
+     
+      <motion.p
+        className='text-[#5B4636] font-semibold tracking-wide mb-7'
+        initial={{ opacity: 0, y: -20 }} // Start below and invisible
+        animate={{ opacity: 1, y: 0 }} // Animate to original position
+        transition={{ duration: 1 }} // Delay the subtitle for a staggered effect
+      >
+        The best way to manage your inventory and orders
+      </motion.p>
+
+
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={OnSubmitHandler}>
           {({ values, setFieldValue, handleSubmit }) => (
             <>

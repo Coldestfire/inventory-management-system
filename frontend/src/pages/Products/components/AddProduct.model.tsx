@@ -39,7 +39,11 @@ const AddProductModel = ({ visible, setVisible }: any) => {
         description: e.description,
       };
 
+      console.log("Payload to be sent: ", payload);
+
       const { data } = await createProduct(payload);
+
+      console.log("Data received from backend: ", data);
 
       if (data) {
         toast.success("Product Created Successfully");

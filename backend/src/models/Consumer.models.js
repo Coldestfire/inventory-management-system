@@ -31,4 +31,6 @@ const ConsumerSchema = new Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Consumer', ConsumerSchema);
+const Consumer = mongoose.model('Consumer', ConsumerSchema);
+
+module.exports = Consumer;

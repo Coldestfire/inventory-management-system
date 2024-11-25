@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { useRegisterUserMutation } from '../provider/queries/Auth.query'
 import { toast } from 'sonner'
+import { motion } from 'framer-motion'
 // import ReCAPTCHA from 'react-google-recaptcha'
 
 const Register = () => {
@@ -69,51 +70,101 @@ const Register = () => {
   }
 
   return (
-    <div className='min-h-screen flex items-center justify-center w-full bg-primary'>
+    <div className="min-h-screen flex flex-col items-center justify-center w-full bg-primary">
+      {/* Title Section */}
+      
+      <motion.h1 className="text-9xl text-[#5B4636] mb-3 tracking-wide font-stylish"
+      initial={{ opacity: 0, y: -30 }} // Start above and invisible
+      animate={{ opacity: 1, y: 0 }} // Animate to original position
+      transition={{ duration: 1 }} // Set duration for smooth transition
+      >
+       Caffy
+      </motion.h1>
+     
+      <motion.p
+        className='text-[#5B4636] font-semibold tracking-wide mb-7'
+        initial={{ opacity: 0, y: -20 }} // Start below and invisible
+        animate={{ opacity: 1, y: 0 }} // Animate to original position
+        transition={{ duration: 1 }} // Delay the subtitle for a staggered effect
+      >
+        The best way to manage your inventory and orders
+      </motion.p>
+
+
+
+  
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={OnSubmitHandler}>
         {({ values, setFieldValue, handleSubmit }) => (
-          <>
-            <form onSubmit={handleSubmit} className="w-[96%] md:w-[70%] lg:w-1/3 shadow-md rounded-md pt-10 pb-3 px-4 bg-secondary">
-            
-              <div className="mb-3 py-1">
-                <label htmlFor="name">Name</label>
-                <Field id='name' name='name' className='w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg' placeholder='Enter Email Address' />
-                <ErrorMessage component={'p'} className='text-red-500 text-sm ' name='name' />
-              </div>
-              <div className="mb-3 py-1">
-                <label htmlFor="email">Email</label>
-                <Field id='email' name='email' className='w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg' placeholder='Enter Email Address' />
-                <ErrorMessage component={'p'} className='text-red-500 text-sm ' name='email' />
-              </div>
-              <div className="mb-3 py-1">
-                <label htmlFor="password">Password</label>
-
-                <Field name='password' id='password' className='w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg' placeholder='*****' />
-                <ErrorMessage component={'p'} className='text-red-500 text-sm ' name='password' />
-
-              </div>
-              <div className="mb-3 py-1">
-                {/* <ReCAPTCHA
+          <form
+            onSubmit={handleSubmit}
+            className="w-[96%] md:w-[70%] lg:w-1/3 shadow-md rounded-md pt-10 pb-3 px-4 bg-secondary"
+          >
+            <div className="mb-3 py-1">
+              <label htmlFor="name">Name</label>
+              <Field
+                id="name"
+                name="name"
+                className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
+                placeholder="Enter Email Address"
+              />
+              <ErrorMessage component="p" className="text-red-500 text-sm" name="name" />
+            </div>
+  
+            <div className="mb-3 py-1">
+              <label htmlFor="email">Email</label>
+              <Field
+                id="email"
+                name="email"
+                className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
+                placeholder="Enter Email Address"
+              />
+              <ErrorMessage component="p" className="text-red-500 text-sm" name="email" />
+            </div>
+  
+            <div className="mb-3 py-1">
+              <label htmlFor="password">Password</label>
+              <Field
+                name="password"
+                id="password"
+                className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
+                placeholder="*****"
+              />
+              <ErrorMessage component="p" className="text-red-500 text-sm" name="password" />
+            </div>
+  
+            <div className="mb-3 py-1">
+              {/* ReCAPTCHA can be added here if needed */}
+               {/* <ReCAPTCHA
                   ref={RecaptchaRef}
                   sitekey={import.meta.env.VITE_SITE_KEY}
                   onChange={(e) => { setFieldValue('token', e) }}
                 /> */}
-              </div>
-              <div className="mb-3 py-1">
-                <Button  loading={registerUserResponse.isLoading} raised type='submit' className='w-full bg-accent text-white py-3 px-2 flex items-center justify-center hover:opacity-85'>Submit
-                {/* disabled={!values.token} */}
-                </Button>
-              </div>
-              <div className="mb-3 py-1 flex items-center justify-end">
-                <p className="inline-flex items-center gap-x-1">   Already Have An Account?<Link className='font-semibold' to={'/login'}>Login</Link></p>
-              </div>
-              
-            </form>
-          </>
+            </div>
+  
+            <div className="mb-3 py-1">
+              <Button
+                loading={registerUserResponse.isLoading}
+                raised
+                type="submit"
+                className="w-full bg-accent text-white py-3 px-2 flex items-center justify-center hover:opacity-85"
+              >
+                Submit
+              </Button>
+            </div>
+  
+            <div className="mb-3 py-1 flex items-center justify-end">
+              <p className="inline-flex items-center gap-x-1">
+                Already Have An Account?
+                <Link className="font-semibold" to={"/login"}>
+                  Login
+                </Link>
+              </p>
+            </div>
+          </form>
         )}
       </Formik>
     </div>
-  )
+  );
 }
 
 export default Register
