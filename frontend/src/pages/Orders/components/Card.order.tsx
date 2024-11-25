@@ -86,13 +86,13 @@ const TableCard = ({ data, id }: any) => {
         {/* Actions */}
         <td className="px-6 py-4 flex space-x-2">
 
-            {/* <button
+            <button
         onClick={() => setEditVisible(true)}
         title="Edit"
         className="p-4 bg-blue-500 text-white rounded-sm"
       >
         Edit
-      </button> */}
+      </button>
 
 
           <button
@@ -111,11 +111,6 @@ const TableCard = ({ data, id }: any) => {
             <FaRegTrashAlt className="text-xl" />
           </Button>
 
-          {/* <EditOrder
-    data={data}
-    visible={editVisible}
-    setVisible={setEditVisible}
-  /> */}
 
 
         </td>
@@ -124,7 +119,8 @@ const TableCard = ({ data, id }: any) => {
       </tr>
 
       {/* Show and Print Modal */}
-      <ShowAndPrintModel id={data._id} visible={visible} setVisible={setVisible} />
+      <ShowAndPrintModel setVisible={setVisible}  visible={visible}  id={data._id} />
+      
       {console.log("DATA id: ", data._id, [id].toString())}
       {/* <ConfirmDialog id="order.queries" acceptClassName="" className=" " contentClassName="py-2 " closable /> */}
     </>

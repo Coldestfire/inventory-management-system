@@ -7,15 +7,8 @@ const router = express.Router();
 
 router.use(Authentication); // Authentication applied to all routes
 
-// Create Order route with validation and authentication
-// router.route("/create-order")
-//     .post(
-//         CreateOrder,        // Order validation
-//         Validation,         // Validation middleware
-//         OrdersController.createOrder // Controller to handle order creation
-//     );
 
-    router.post('/create-order', OrdersController.createOrder);
+router.post('/create-order', OrdersController.createOrder);
 
 // Get all orders route
 router.route("/get-orders")

@@ -7,7 +7,6 @@ const ProductService = require("../services/Product.service");  // Import Produc
 class OrderService {
 
 
-  //TODO : Change createOrder so it saves consumer id and does not save it as null
   static async createOrder(user, body) {
     // Validate required fields
     if (!body.items || body.items.length === 0) {
@@ -101,19 +100,6 @@ orders.forEach(order => {
   console.log("orderData: ", orderData);
 });
 
-
-
-
-
-
-//DEBUGGING END
-
-  // Fetch the orders with populated fields
-  
-
-
-
-
   // Filter by product name if a query is provided
   const filteredOrders = query
     ? orders.filter((order) =>
@@ -137,7 +123,6 @@ orders.forEach(order => {
     hasMore,
   };
 }
-
 
 
 static async deleteOrder(user,id) {
