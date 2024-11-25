@@ -89,7 +89,7 @@ const TableCard = ({ data, id }: any) => {
             <button
         onClick={() => setEditVisible(true)}
         title="Edit"
-        className="p-4 bg-blue-500 text-white rounded-sm"
+        className="p-4 bg-blue-500 text-white rounded-slg"
       >
         Edit
       </button>
@@ -98,7 +98,7 @@ const TableCard = ({ data, id }: any) => {
           <button
             onClick={() => setVisible(!visible)}
             title="View"
-            className="p-4 bg-teal-500 text-white rounded-sm"
+            className="p-4 bg-teal-500 text-white rounded-lg"
           >
             <BsPrinter className="text-xl" />
           </button>
@@ -106,7 +106,7 @@ const TableCard = ({ data, id }: any) => {
             loading={DeleteOrderResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
             title="Delete"
-            className="p-4 bg-red-500 text-white rounded-sm"
+            className="p-4 bg-red-500 text-white rounded-lg"
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>
