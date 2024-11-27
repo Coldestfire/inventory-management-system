@@ -21,7 +21,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           breakPoint="lg"
           toggled={selector.toggle}
           className="h-full text-black" // Changed from "h-screen" to "h-full"
-          style={{ height: '145vh', overflowY: 'auto' }} // Added inline styles
+          style={{ height: '151vh', overflowY: 'auto' }} // Added inline styles
           backgroundColor='#D6C0B3'
         >
           

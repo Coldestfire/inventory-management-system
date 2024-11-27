@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useGetAllOrdersQuery } from "../../../provider/queries/Orders.query";
 import { Calendar } from "primereact/calendar";
 import Loader from "../../../components/Loader";
+import { Dialog } from "primereact/dialog";
 
 const OrdersReportDateWise = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
-  // Pass date filters as ISO strings to the API
   const { data, isLoading, isError } = useGetAllOrdersQuery({
     query: "",
     page: 1,
@@ -23,14 +25,23 @@ const OrdersReportDateWise = () => {
     return <div>Failed to fetch orders. Please try again later.</div>;
   }
 
-  // Safeguard for null data and ensure dates are parsed properly
   const filteredOrders = data?.data.filter((order: any) => {
-    const orderDate = new Date(order.orderDate || order.createdAt); // Ensure correct date field
+    const orderDate = new Date(order.orderDate || order.createdAt);
     return (
       (!startDate || orderDate >= startDate) && 
       (!endDate || orderDate <= endDate)
     );
   });
+
+  const handleReset = () => {
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOrderClick = (order: any) => {
+    setSelectedOrder(order);
+    setDialogVisible(true);
+  };
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
@@ -39,21 +50,27 @@ const OrdersReportDateWise = () => {
         <Calendar
           value={startDate}
           onChange={(e) => setStartDate(e.value)}
-          placeholder="Start Date"
+          placeholder=" Start Date"
           dateFormat="dd/mm/yy"
+          className="border-2 border-gray-200 rounded-lg outline-none h-[50px]"
         />
         <Calendar
           value={endDate}
           onChange={(e) => setEndDate(e.value)}
-          placeholder="End Date"
+          placeholder=" End Date"
           dateFormat="dd/mm/yy"
+          className="border-2 border-gray-200 rounded-lg outline-none"
         />
+        <button onClick={handleReset} className="bg-gray-200 px-4 py-2 rounded">
+          Reset
+        </button>
       </div>
       <ul className="space-y-2">
         {filteredOrders?.map((order: any) => (
           <li
             key={order._id}
-            className="flex justify-between items-center bg-gray-100 p-3 rounded-lg"
+            className="flex justify-between items-center bg-gray-100 p-3 rounded-lg hover:bg-gray-300 hover:cursor-pointer"
+            onClick={() => handleOrderClick(order)}
           >
             <span className="text-lg">{order.consumer.name}</span>
             <span className="text-sm">
@@ -62,6 +79,29 @@ const OrdersReportDateWise = () => {
           </li>
         ))}
       </ul>
+
+      {selectedOrder && (
+        <Dialog
+          visible={dialogVisible}
+          onHide={() => setDialogVisible(false)}
+          header="Order Details"
+          className="w-2/3 lg:w-1/4"
+        >
+          <div>
+            <h3 className="text-lg font-semibold">Total Amount: &#8377;{selectedOrder.items.reduce((total: number, item: any) => total + (item.quantity * item.productId.price), 0)}</h3>
+            <ul className="mt-4 space-y-2">
+              {selectedOrder.items.map((item: any, index: number) => (
+                <li key={index} className="flex justify-between">
+                  <span>{index + 1}.</span>
+                  <span>{item.productId.name}</span>
+                  <span>Quantity:{item.quantity}</span>
+                  <span>Price: &#8377;{item.productId.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 };

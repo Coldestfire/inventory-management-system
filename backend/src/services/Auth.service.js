@@ -5,17 +5,17 @@ const { generatoken } = require("../utils/Token.utils")
 const axios =  require("axios");
 const bcrypt = require('bcryptjs');
 class AuthService{
-       static  async RegisterUser(body){
+       static  async RegisterUser(body, token){
 
                 const {email,password,name} = body
-                // ,token
+             
 
-                // const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
-                //     params:{
-                //     secret:process.env.CAPTCHA_SCREATE_KEY,
-                //     response:token,
-                // }
-                // })
+                const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
+                    params:{
+                    secret:process.env.CAPTCHA_SCREATE_KEY,
+                    response:token,
+                }
+                })
 
                 const data =await response.data;
 
@@ -55,23 +55,23 @@ class AuthService{
 
        }
         static  async LoginUser(body){
-        const {email,password} = body
-        // ,name,token
+        const {email,password,token} = body
+        // 
 
         
-                // const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
-                //     params:{
-                //     secret:process.env.CAPTCHA_SCREATE_KEY,
-                //     response:token,
-                // }
-                // })
+                const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
+                    params:{
+                    secret:process.env.CAPTCHA_SCREATE_KEY,
+                    response:token,
+                }
+                })
 
-                // const data = await response.data;
+                const data = await response.data;
 
-                // if(!data.success){
+                if(!data.success){
 
-                //         throw new ApiError(400,"Captcha Not Valid")
-                // }
+                        throw new ApiError(400,"Captcha Not Valid")
+                }
                 const checkExist = await UserModel.findOne({email})
                 if(!checkExist){
                     throw new ApiError(400,"User Not Registered")
@@ -79,7 +79,7 @@ class AuthService{
                 }
 
                 if(password !==checkExist.password){
-                throw new ApiError(400,"Invalid Credentials")
+                throw new ApiError(400,"Invalid Password")
                     return
                 }
              

@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { useRegisterUserMutation } from '../provider/queries/Auth.query'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
-// import ReCAPTCHA from 'react-google-recaptcha'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 const Register = () => {
 
@@ -37,37 +37,32 @@ const Register = () => {
   })
 
   const OnSubmitHandler = async (e: User, { resetForm }: any) => {
-        console.log({e});
+    console.log({ e });
 
-        try {
-          const {data,error }:any = await registerUser(e)
-       
-          
-              if(error){
-                toast.error(error.data.message);
-                return
-                
-              }
+    try {
+        // Pass the user object, including the captcha token
+        const { data, error }: any = await registerUser(e);
 
-              console.log(data,error);
+        if (error) {
+            toast.error(error.data.message); // Display error message
+            return;
+        }
 
+        console.log(data, error);
 
-              localStorage.setItem("token",data.token);
+        localStorage.setItem("token", data.token);
 
-              toast.success("Registered Successfully");
-              
+        toast.success("Registered Successfully");
 
-          resetForm()
-          navigate("/")
-        } catch (error:any) {
-            // toast
-          toast.error(error.message);
-              
-          }finally{
-          RecaptchaRef.current.reset();
-          }
-        
-  }
+        resetForm();
+        navigate("/");
+    } catch (error: any) {
+        toast.error(error.message); // Handle other exceptions
+    } finally {
+        RecaptchaRef.current.reset(); // Reset the captcha
+    }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center w-full bg-primary">
@@ -134,11 +129,14 @@ const Register = () => {
   
             <div className="mb-3 py-1">
               {/* ReCAPTCHA can be added here if needed */}
-               {/* <ReCAPTCHA
-                  ref={RecaptchaRef}
-                  sitekey={import.meta.env.VITE_SITE_KEY}
-                  onChange={(e) => { setFieldValue('token', e) }}
-                /> */}
+              <ReCAPTCHA
+    ref={RecaptchaRef}
+    sitekey={import.meta.env.VITE_SITE_KEY}
+    onChange={(value) => {
+        setFieldValue("token", value); // Pass the token to Formik
+    }}
+/>
+
             </div>
   
             <div className="mb-3 py-1">
@@ -147,6 +145,7 @@ const Register = () => {
                 raised
                 type="submit"
                 className="w-full bg-accent text-white py-3 px-2 flex items-center justify-center hover:opacity-85"
+                disabled={!values.token}
               >
                 Submit
               </Button>

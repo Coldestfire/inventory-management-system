@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { useLoginUserMutation } from '../provider/queries/Auth.query'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion';
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 const Login = () => {
 const [LoginUser,LoginUserResponse] = useLoginUserMutation()
 const navigate = useNavigate()
@@ -104,15 +104,15 @@ const navigate = useNavigate()
 
                 </div>
                 <div className="mb-3 py-1">
-                  {/* <ReCAPTCHA
+                  <ReCAPTCHA
                     ref={RecaptchaRef}
                     sitekey={import.meta.env.VITE_SITE_KEY}
                     onChange={(e) => { setFieldValue('token',e)}}
-                  /> */}
+                  />
                 </div>
                 <div className="mb-3 py-1 flex items-center justify-center">
-                  <Button   loading={LoginUserResponse.isLoading} raised className='w-full bg-accent text-white py-3 px-2 flex items-center justify-center hover:opacity-85'>
-                  {/* disabled={!values.token} */}
+                  <Button  disabled={!values.token} loading={LoginUserResponse.isLoading} raised className='w-full bg-accent text-white py-3 px-2 flex items-center justify-center hover:opacity-85'>
+                  
                   Submit
                   </Button>
                 </div>
@@ -120,7 +120,7 @@ const navigate = useNavigate()
                   <p className="inline-flex items-center gap-x-1">   Don't Have An Account?<Link className='font-semibold' to={'/register'}>Register</Link></p>
                 </div>
                 <div className="mb-3 py-1 flex items-center justify-end">
-                  <p className="inline-flex items-center gap-x-1">   Forget<Link className='font-semibold' to={'#'}>Password ?</Link></p>
+                 
                 </div>
               </form>
             </>
