@@ -23,6 +23,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           className="h-screen text-black"
           backgroundColor='#D6C0B3'
         >
+          
           <Menu>
             {/* Toggle button */}
             <MenuItem

@@ -106,24 +106,38 @@ class ConsumerService {
     }
 
     static async DashboardData(user) {
-        // Get the count of consumers
+        // Get the count of consumers associated with the user
         const consumers = await ConsumerModel.countDocuments({ user });
+        console.log("Consumers: ", consumers);
+      
+        // Fetch all orders for the user and select the necessary fields (order items and quantities)
+        const orders = await OrdersModel.find({ user }).populate('items.productId', 'price').select('items quantity');
+        console.log("Orders: ", orders);
+      
+        // Calculate the total sales by summing up the item prices multiplied by their quantities
+        let totalSales = 0;
+        orders.forEach((order) => {
+          order.items.forEach((item) => {
+            if (item.productId && item.productId.price) {
+              totalSales += item.productId.price * item.quantity;
+            }
+          });
+        });
 
-        // Fetch all orders for the user and select only the prices of items
-        const orders = await OrdersModel.find({ user }).select("items.price -_id");
-
-        // Extract prices into a single flat array
-        const prices = orders.flatMap((order) => order.items.map((item) => item.price));
-
-        // Calculate the total sales (sum of all item prices)
-        const totalSales = prices.length > 0 ? prices.reduce((sum, price) => sum + price, 0) : 0;
-
+        console.log("Total Sales: ", totalSales);
+      
+        // Return the dashboard data
         return {
-            consumers,
-            orders: orders.length,
-            sell: totalSales // Total sales is now safely calculated
+          consumers,
+          orders: orders.length,
+          sell: totalSales // Total sales calculated from item prices and quantities
         };
-    }
+      }
+
+      
+      
+      
+      
 }
 
 module.exports = ConsumerService;

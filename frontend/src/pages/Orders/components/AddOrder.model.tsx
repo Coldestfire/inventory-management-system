@@ -187,7 +187,7 @@ const AddOrderModel = ({ visible, setVisible }: any) => {
                                                     <Field
                                                         type="number"
                                                         name={`items[${i}].quantity`}
-                                                        className="w-full my-2 border outline-none py-3 px-4"
+                                                        className="w-full h-[70px] my-2 border outline-none py-3 px-4 rounded-lg text-2xl"
                                                         placeholder="Quantity"
                                                     />
                                                 </div>
@@ -220,7 +220,7 @@ const AddOrderModel = ({ visible, setVisible }: any) => {
                         {/* Submit Button */}
                         <div className="flex justify-end">
                             <Button
-                                className="text-white px-5 rounded-sm bg-accent py-3 text-center"
+                                className="text-white px-5 bg-accent py-3 text-center rounded-lg"
                                 type="submit"
                             >
                                 Add Order

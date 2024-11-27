@@ -29,6 +29,17 @@ export const OrdersApi = createApi({
             providesTags: ['getAllOrders']
         }),
 
+        updateById: builder.mutation<any, any>({
+            query: ({id,data}) => ({
+                url: `/orders/${id}`,
+                method: 'PATCH',
+                body: data,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }),
+        }),
+
         DeleteOrder: builder.mutation<any, any>({
             query: (obj) => ({
                 url: `/orders/delete/${obj}`,
@@ -50,9 +61,38 @@ export const OrdersApi = createApi({
         }),
 
         
+        dashboardData: builder.query<any, any>({
+            query: () => ({
+                url: '/consumer/dashboard/' ,
+                method: 'GET', 
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            })
+        }),
          
+        getMostAppeared: builder.query<any, any>({
+            query: () => ({
+                url: '/orders/getmost/' ,
+                method: 'GET', 
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            })
+        }),
+
+        getWeeklyRevenue: builder.query<any, any>({
+            query: () => ({
+                url: '/orders/weekly-revenue/' ,
+                method: 'GET', 
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            })
+        })
+
     }),
 })
 
 
-export const { useCreateOrderMutation,useGetAllOrdersQuery , useDeleteOrderMutation ,useGetInvoiceByIdQuery} = OrdersApi
+export const { useCreateOrderMutation,useGetAllOrdersQuery ,useUpdateByIdMutation , useDeleteOrderMutation ,useGetInvoiceByIdQuery, useGetMostAppearedQuery, useGetWeeklyRevenueQuery} = OrdersApi

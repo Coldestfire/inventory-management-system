@@ -14,15 +14,11 @@ router.delete("/delete/:id",ConsumerValidation.Params_id,Validation,ConsumerCont
 
 router.route("/dashboard")
 .get(ConsumerController.DashboardData)
-;
-
 
 
 router.get("/get/:id",ConsumerValidation.Params_id,Validation,ConsumerController.getById)
 router.patch("/update/:id",ConsumerValidation.RegisterConsumer,Validation,ConsumerController.updateById)
 
 
-
-//
 
 module.exports = router

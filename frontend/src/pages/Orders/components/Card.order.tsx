@@ -1,4 +1,3 @@
-import { ConfirmDialog } from 'primereact/confirmdialog';
 import { useState } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { toast } from 'sonner';
@@ -19,10 +18,6 @@ const TableCard = ({ data, id }: any) => {
 
   const [editVisible, setEditVisible] = useState(false);
   
-  // console.log("Order items: ", orderData);
-  // console.log("OrderData.DATA items: ", orderData?.data);
-  console.log("DATA: ", data);
-
   if (isOrderLoading) {
     return <Loader />;
   }
@@ -41,13 +36,8 @@ const TableCard = ({ data, id }: any) => {
     }
   };
 
-  console.log("ORDER ID : ", data._id);
-
   // Displaying the order items (product name and price)
-  const orderItems = data?.items.map((item: any) => {
-    // Assuming each item has a `productId` with product details
-    return item.productId;
-  });
+  const orderItems = data?.items.map((item: any) => item.productId);
 
   return (
     <>
@@ -62,12 +52,9 @@ const TableCard = ({ data, id }: any) => {
           <p>{data?.consumer?.name}</p>
         </td>
 
-        {/* Display Consumer's Email */}
         <td className="px-6 py-4">
           {data?.consumer?.email}
-          </td>
-
-          
+        </td>
 
         {/* Display Items */}
         <td className="px-6 py-4">
@@ -76,32 +63,29 @@ const TableCard = ({ data, id }: any) => {
               orderItems.map((item: any, i: number) => (
                 <li key={i}>
                  {i + 1}. {item?.name} - {data?.items[i].status}
-                 {/* data?.items[i].status USED TO GET STATUS */}
                 </li>
               ))}
           </ul>
         </td>
 
-
         {/* Actions */}
         <td className="px-6 py-4 flex space-x-2">
+          <Button
+            onClick={() => setEditVisible(true)}
+            title="Edit"
+            className="p-4 bg-blue-500 text-white rounded-lg"
+          >
+            Edit
+          </Button>
 
-            <button
-        onClick={() => setEditVisible(true)}
-        title="Edit"
-        className="p-4 bg-blue-500 text-white rounded-slg"
-      >
-        Edit
-      </button>
-
-
-          <button
+          <Button
             onClick={() => setVisible(!visible)}
             title="View"
             className="p-4 bg-teal-500 text-white rounded-lg"
           >
             <BsPrinter className="text-xl" />
-          </button>
+          </Button>
+
           <Button
             loading={DeleteOrderResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
@@ -110,19 +94,14 @@ const TableCard = ({ data, id }: any) => {
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>
-
-
-
         </td>
-        
-
       </tr>
 
       {/* Show and Print Modal */}
-      <ShowAndPrintModel setVisible={setVisible}  visible={visible}  id={data._id} />
-      
-      {console.log("DATA id: ", data._id, [id].toString())}
-      {/* <ConfirmDialog id="order.queries" acceptClassName="" className=" " contentClassName="py-2 " closable /> */}
+      <ShowAndPrintModel setVisible={setVisible} visible={visible} id={data._id} />
+
+      {/* Edit Order Modal */}
+      {/* <EditOrder  visible={editVisible}  setVisible={setEditVisible}id={data._id} /> */}
     </>
   );
 };

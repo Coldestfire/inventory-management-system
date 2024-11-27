@@ -81,7 +81,7 @@ class ProductService {
 
         // Check for low stock notification
         if (product.stock <= product.lowStockThreshold) {
-            console.log(`Low stock alert for ${product.name}`);
+            console.log(`Low stock alert for ${product.name}`); 
         }
 
         return product;
@@ -96,7 +96,7 @@ class ProductService {
     return { msg: "Product deleted successfully" };
   }
 
-    static async getProductStats(user) {
+    static async getProductStats(user)  {
         const totalProducts = await ProductModel.countDocuments({ user });
         const lowStockProducts = await ProductModel.countDocuments({
             user,
@@ -108,6 +108,45 @@ class ProductService {
             lowStockProducts,
         };
     }
+
+    // ProductService.js
+static async updateById(id, body) {
+    const { name, price, stock, lowStockThreshold, description } = body;
+
+    console.log("Request ID:", id);
+    console.log("Request Body:", body);
+
+
+    // Check if the product exists
+    const product = await ProductModel.findById(id);
+    if (!product) {
+        throw new ApiError(404, 'Product not found');
+    }
+
+    // Update the product
+    await ProductModel.findByIdAndUpdate(id, { name, price, stock, lowStockThreshold, description });
+
+    return {
+        msg: 'Product updated successfully',
+    };
+}
+
+static async getById(user, id) {
+    // Find the product by its ID and check if it belongs to the given user
+    const product = await ProductModel.findOne({ _id: id, user: user });
+
+    // If product doesn't exist, throw an error
+    if (!product) {
+        throw new ApiError(400, "Product Not Found in Record");
+    }
+
+    return {
+        product,  // Return the product details
+    };
+}
+
+
+
 }
 
 module.exports = ProductService;

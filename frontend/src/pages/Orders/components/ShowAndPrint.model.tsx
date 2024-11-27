@@ -44,6 +44,7 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
             </div>
             <div className="w-1/2">
               <Barcode displayValue={false} width={1} height={50} value={order._id} />
+              <h1 className="font-semibold">Supplier: {order.user?.name || 'N/A'}</h1>
             </div>
           </div>
 

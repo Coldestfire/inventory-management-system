@@ -14,7 +14,7 @@ class ProductController {
     });
 
     static updateProduct = CatchAsync(async (req, res) => {
-        const product = await ProductService.updateProduct(req.user, req.params.id, req.body);
+        const product = await ProductService.updateById(req.params.id, req.body);
         return res.status(200).json(product);
     });
 
@@ -25,6 +25,11 @@ class ProductController {
 
     static getProductStats = CatchAsync(async (req, res) => {
         const stats = await ProductService.getProductStats(req.user);
+        return res.status(200).json(stats);
+    });
+
+    static getProductById = CatchAsync(async (req, res) => {
+        const stats = await ProductService.getById(req.user, req.params.id);
         return res.status(200).json(stats);
     });
 }

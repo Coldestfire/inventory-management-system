@@ -36,6 +36,7 @@ const AddProductModel = ({ visible, setVisible }: any) => {
         name: e.name,
         price: e.price,
         stock: e.stock,
+        lowStockThreshold: e.lowStockThreshold,
         description: e.description,
       };
 
@@ -94,6 +95,17 @@ const AddProductModel = ({ visible, setVisible }: any) => {
             </div>
 
             <div className="mb-3">
+              <label htmlFor="stock">Low Stock Threshold</label>
+              <Field 
+                name="lowStockThreshold" 
+                type="number" 
+                className="w-full my-2 border outline-none py-3 px-4"
+                placeholder="Enter Low Stock Threshold"
+              />
+              <ErrorMessage name="stock" className="text-red-500 capitalize" component="p" />
+            </div>
+
+            <div className="mb-3">
               <label htmlFor="description">Description</label>
               <Field 
                 name="description" 
@@ -104,7 +116,7 @@ const AddProductModel = ({ visible, setVisible }: any) => {
             </div>
 
             <div className="flex justify-end">
-              <Button className="text-white px-5 rounded-sm bg-accent py-3 text-center">
+              <Button className="text-white px-5 bg-accent py-3 text-center rounded-lg">
                 {isLoading ? "Creating..." : "Add Product"}
               </Button>
             </div>

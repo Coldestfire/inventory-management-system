@@ -23,7 +23,9 @@ router.post('/', ProductController.createProduct); // Add validation if availabl
 // Route to update an existing product
 // Uncomment validation middleware if you have it
 // router.put('/:id', ProductValidation.updateProduct, Validation, ProductController.updateProduct);
-router.put('/:id', ProductController.updateProduct); // Add validation if available
+router.patch('/:id', ProductController.updateProduct); // Add validation if available
+
+router.get('/:id', ProductController.getProductById);
 
 // Route to delete a product
 // Uncomment validation middleware if you have it

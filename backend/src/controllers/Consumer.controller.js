@@ -16,8 +16,7 @@ class ConsumerController{
             
               static getById= CatchAsync(async(req,res)=>{
                 const res_obj  = await ConsumerService.getById(req?.user,req.params.id);
-                return    res.status(200).json(res_obj)
-                 
+                return    res.status(200).json(res_obj)   
             })
             
              static GetAllUser= CatchAsync(async(req,res)=>{

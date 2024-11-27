@@ -22,4 +22,13 @@ router.route("/get-invoice/:id")
 router.route("/delete/:id")
     .delete(OrdersController.deleteOrder);
 
+    router.route("/getmost")
+    .get(OrdersController.getMostAppeared);
+
+    router.route("/weekly-revenue")
+    .get(OrdersController.WeeklyRevenue);
+
+    router.route("/:id")
+    .patch(OrdersController.updateById);
+
 module.exports = router;

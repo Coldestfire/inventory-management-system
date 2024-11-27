@@ -11,6 +11,8 @@ import ViewModel from './ViewModel.user';
 const TableCard = ({ data, id }: any) => {
   const [DeleteConsumer, DeleteConsumerResponse] = useDeleteConsumerMutation();
 
+  console.log("data_id : ", data._id)
+
   const [visible, setVisible] = useState(false);
   const [viewVisible, setViewVisible] = useState(false);
 

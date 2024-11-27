@@ -1,140 +1,168 @@
-import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
+import { useState, useEffect } from 'react';
+import { Formik, Field, FieldArray, ErrorMessage } from 'formik';
+import * as yup from 'yup';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import { useState } from 'react';
 import { toast } from 'sonner';
-import { useUpdateOrderMutation } from '../../../provider/queries/Orders.query'; // Custom hook for updating orders
+import { useGetAllOrdersQuery,useGet , useUpdateByIdMutation } from '../../../provider/queries/Orders.query';
+import Loader from '../../../components/Loader';
+import { Dialog } from 'primereact/dialog';
 
-const EditOrder = ({ data, visible, setVisible }: any) => {
-  const [updateOrder, { isLoading }] = useUpdateOrderMutation();
+const UpdateProduct = ({ visible, setVisible, id }) => {
+  const [updateOrder, updateOrderResponse] = useUpdateByIdMutation();
 
-  // Local state for editing fields
-  const [formData, setFormData] = useState({
-    consumerName: data?.consumer?.name || '',
-    consumerEmail: data?.consumer?.email || '',
-    items: data?.items.map((item: any) => ({
-      name: item?.productId?.name || '',
-      quantity: item?.quantity || 0,
-      status: item?.status || '',
+  const { data: productData, isLoading: isProductLoading } = useGetAllOrdersQuery({ query: '', page: 1 });
+
+
+  const order = orderData?.data?.find((o) => o._id === id);
+  console.log("IDasd", order)
+
+
+  const initialValues = {
+    user: order?.consumer,
+    items: order?.items.map((item) => ({
+      productId: item.productId, // Retains object structure for dropdown
+      quantity: item.quantity,
+      status: item.status,
     })),
-  });
-
-  const statuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
-
-  const handleInputChange = (e: any, field: string, index?: number) => {
-    if (field === 'items') {
-      const updatedItems = [...formData.items];
-      updatedItems[index!] = {
-        ...updatedItems[index!],
-        [e.target.name]: e.target.value,
-      };
-      setFormData({ ...formData, items: updatedItems });
-    } else {
-      setFormData({ ...formData, [field]: e.target.value });
-    }
   };
 
-  const handleSubmit = async () => {
+    console.log("initialValues", initialValues)
+  const validationSchema = yup.object({ 
+    user: yup.object().required('User is required'),
+    items: yup.array().of(
+      yup.object({
+        productId: yup.object().required('Product is required'),
+        quantity: yup.number().min(1, 'Quantity must be at least 1').required('Quantity is required'),
+        status: yup
+          .string()
+          .oneOf(['pending', 'shipped', 'delivered', 'cancelled'], 'Invalid status')
+          .required('Status is required'),
+      })
+    ),
+  });
+
+  const onSubmitHandler = async (values) => {
     try {
-      const payload = {
-        _id: data._id,
-        consumer: {
-          name: formData.consumerName,
-          email: formData.consumerEmail,
-        },
-        items: formData.items.map((item) => ({
-          productId: item.name, // Assuming this is how product ID is identified
+      const updatedOrderData = {
+        orderId: order._id, // Ensure this is a valid ObjectId string
+        consumer: values.user._id, // Ensure the consumer's _id is a string
+        items: values.items.map((item) => ({
+          productId: item.productId._id, // Use the MongoDB product _id
           quantity: item.quantity,
           status: item.status,
         })),
       };
 
-      const { data: response, error }: any = await updateOrder(payload);
+      console.log('UPDATED ORDER DATA:', updatedOrderData);
 
+      const { data, error } = await updateOrder(updatedOrderData);
       if (error) {
         toast.error(error.data.message);
         return;
       }
+
       toast.success('Order updated successfully!');
-      setVisible(false);
-    } catch (e: any) {
-      toast.error(e.message);
+      setVisible(false); // Close the dialog
+    } catch (error) {
+      console.error('Error updating the order:', error);
+      toast.error('Error updating the order: ' + error.message);
     }
   };
 
+  if (isProductLoading || isLoading) {
+    return <Loader />;
+  }
+
   return (
     <Dialog
-      header="Edit Order"
-      visible={visible}
-      onHide={() => setVisible(false)}
-      className="w-[90%] lg:w-1/2"
+    draggable={false}
+    visible={visible}
+    className="w-[90%] mx-auto lg:mx-0 lg:w-1/2"
+    onHide={() => setVisible(false)}
+    header="Update Order Details"
+  >
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmitHandler}
     >
-      <div className="p-4 space-y-4">
-        {/* Consumer Details */}
-        <div className="flex flex-col gap-4">
-          <span className="p-float-label">
-            <InputText
-              id="consumerName"
-              value={formData.consumerName}
-              onChange={(e) => handleInputChange(e, 'consumerName')}
+      {({ handleSubmit, isSubmitting }) => (
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="mb-3">
+            <label htmlFor="name">Name <span className="text-red-500">*</span></label>
+            <Field
+              name="name"
+              id="name"
+              type="text"
+              placeholder="Choose Consumer"
+              className="w-full my-2 border outline-none py-3 px-4"
             />
-            <label htmlFor="consumerName">Consumer Name</label>
-          </span>
-          <span className="p-float-label">
-            <InputText
-              id="consumerEmail"
-              value={formData.consumerEmail}
-              onChange={(e) => handleInputChange(e, 'consumerEmail')}
-            />
-            <label htmlFor="consumerEmail">Consumer Email</label>
-          </span>
-        </div>
-
-        {/* Items Section */}
-        {formData.items.map((item, index) => (
-          <div key={index} className="border p-4 rounded-md space-y-2">
-            <span className="p-float-label">
-              <InputText
-                id={`itemName-${index}`}
-                name="name"
-                value={item.name}
-                onChange={(e) => handleInputChange(e, 'items', index)}
-              />
-              <label htmlFor={`itemName-${index}`}>Item Name</label>
-            </span>
-            <span className="p-float-label">
-              <InputText
-                id={`quantity-${index}`}
-                name="quantity"
-                type="number"
-                value={item.quantity}
-                onChange={(e) => handleInputChange(e, 'items', index)}
-              />
-              <label htmlFor={`quantity-${index}`}>Quantity</label>
-            </span>
-            <Dropdown
-              value={item.status}
-              name="status"
-              options={statuses}
-              onChange={(e) => handleInputChange(e, 'items', index)}
-              placeholder="Select Status"
-            />
+            <ErrorMessage name="name" component="p" className="text-red-500" />
           </div>
-        ))}
 
-        {/* Submit Button */}
-        <div className="flex justify-end">
-          <Button
-            label={isLoading ? 'Updating...' : 'Update Order'}
-            onClick={handleSubmit}
-            className="p-button-success"
-            disabled={isLoading}
-          />
-        </div>
-      </div>
-    </Dialog>
+          <div className="mb-3">
+            <label htmlFor="price">Price <span className="text-red-500">*</span></label>
+            <Field
+              name="price"
+              id="price"
+              type="number"
+              placeholder="Enter Product Price"
+              className="w-full my-2 border outline-none py-3 px-4"
+            />
+            <ErrorMessage name="price" component="p" className="text-red-500" />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="stock">Stock <span className="text-red-500">*</span></label>
+            <Field
+              name="stock"
+              id="stock"
+              type="number"
+              placeholder="Enter Product Stock"
+              className="w-full my-2 border outline-none py-3 px-4"
+            />
+            <ErrorMessage name="stock" component="p" className="text-red-500" />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="description">Description <span className="text-red-500">*</span></label>
+            <Field
+              name="description"
+              id="description"
+              as="textarea"
+              rows={3}
+              placeholder="Enter Product Description"
+              className="w-full my-2 border outline-none py-3 px-4"
+            />
+            <ErrorMessage name="description" component="p" className="text-red-500" />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="lowStockThreshold">Low Stock Threshold</label>
+            <Field
+              name="lowStockThreshold"
+              id="lowStockThreshold"
+              type="number"
+              placeholder="Enter Low Stock Threshold"
+              className="w-full my-2 border outline-none py-3 px-4"
+            />
+            <ErrorMessage name="lowStockThreshold" component="p" className="text-red-500" />
+          </div>
+
+          <div className="flex justify-end">
+            <Button
+              loading={isSubmitting || updateProductResponse.isLoading}
+              className="bg-accent text-white px-5 py-3 rounded-lg"
+            >
+              Update Product
+            </Button>
+          </div>
+        </form>
+      )}
+    </Formik>
+  </Dialog>
   );
 };
 
-export default EditOrder;
+export default UpdateProduct;
