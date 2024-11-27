@@ -20,7 +20,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           collapsed={selector.collapsed}
           breakPoint="lg"
           toggled={selector.toggle}
-          className="h-screen text-black"
+          className="h-full text-black" // Changed from "h-screen" to "h-full"
+          style={{ height: '145vh', overflowY: 'auto' }} // Added inline styles
           backgroundColor='#D6C0B3'
         >
           

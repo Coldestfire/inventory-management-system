@@ -10,7 +10,16 @@ class OrdersController {
   });
 
   static getAllorders = CatchAsync(async (req, res) => {
-    const orders = await OrderService.getAllorders(req.user, req.query.page, req.query.query);
+    const { page, query, startDate, endDate } = req.query;
+  
+    const orders = await OrderService.getAllorders(
+      req?.user,
+      page,
+      query,
+      startDate,
+      endDate
+    );
+  
     return res.status(200).json(orders);
   });
 

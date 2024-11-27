@@ -19,15 +19,26 @@ export const OrdersApi = createApi({
         }),
 
         getAllOrders: builder.query<any, any>({
-            query: (obj) => ({
-                url: `/orders/get-orders?query=${obj.query}&page=${obj.page}`,
+            query: (obj) => {
+              const params = new URLSearchParams({
+                query: obj.query || "",
+                page: obj.page?.toString() || "1",
+              });
+          
+              if (obj.startDate) params.append("startDate", obj.startDate);
+              if (obj.endDate) params.append("endDate", obj.endDate);
+          
+              return {
+                url: `/orders/get-orders?${params.toString()}`,
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem("token")
-                }
-            }),
-            providesTags: ['getAllOrders']
-        }),
+                  'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                },
+              };
+            },
+            providesTags: ['getAllOrders'],
+          }),
+          
 
         updateById: builder.mutation<any, any>({
             query: ({id,data}) => ({

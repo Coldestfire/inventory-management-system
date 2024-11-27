@@ -50,6 +50,14 @@ const Header = () => {
             className="lg:flex"
             onClick={logoutHandler}
           >
+
+             {/* Right Section: User name and Logout button */}
+        {/* <div className="flex items-center gap-4">
+          <span className="text-lg font-medium">{user.name}</span>
+          <button
+            title="Logout"
+            className="lg:flex"
+            onClick={logoutHandler} */}
             <IoLogOutOutline className="text-2xl" />
           </button>
         </div>

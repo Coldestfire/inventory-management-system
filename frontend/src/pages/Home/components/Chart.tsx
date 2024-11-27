@@ -6,7 +6,6 @@ import Loader from "../../../components/Loader";
 const Chart = () => {
   const { data, isLoading, isError, error } = useGetWeeklyRevenueQuery({});
 
-
   if (isLoading) {
     return <Loader />;
   }
@@ -15,9 +14,8 @@ const Chart = () => {
     return <div>Failed to load chart data: {error?.message || "Unknown error"}</div>;
   }
 
-
-  // Assume the API returns data as [{ date: "DD/MM/YYYY", revenue: 100 }]
-  const chartData = data || [];
+  // Reverse the data so recent dates appear on the right
+  const chartData = (data || []).slice().reverse();
 
   return (
     <div className="p-6 bg-white shadow-lg rounded-lg">

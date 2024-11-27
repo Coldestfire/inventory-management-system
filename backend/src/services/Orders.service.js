@@ -73,56 +73,45 @@ class OrderService {
   
 
 
-static async getAllorders(user, page = 1, query = "") {
+static async getAllorders(user, page = 1, query = "", startDate = null, endDate = null) {
   const limit = 10;
   const skip = (Number(page) - 1) * limit;
 
-  // Ensure the base query is accurate
-  const baseQuery = { user: user }; // Filter by logged-in user
+  // Build base query
+  const baseQuery = { user: user };
+
+  // Add product name query
+  if (query) {
+    baseQuery["items.productId.name"] = { $regex: query, $options: "i" };
+  }
+
+  // Add date range filters
+  if (startDate) {
+    baseQuery.orderDate = { $gte: new Date(startDate) };
+  }
+  if (endDate) {
+    baseQuery.orderDate = {
+      ...baseQuery.orderDate,
+      $lte: new Date(endDate),
+    };
+  }
+
   const orders = await OrdersModel.find(baseQuery)
-  .populate("consumer", "name email") // Populate consumer's name and email
-  .populate("items.productId", "name description price") // Populate product details
-  .sort({ orderDate: -1 }) // Sort by order date (newest first)
-  .limit(limit)
-  .skip(skip);
+    .populate("consumer", "name email")
+    .populate("items.productId", "name description price")
+    .sort({ orderDate: -1 })
+    .limit(limit)
+    .skip(skip);
 
-// DEBUGGING START
-orders.forEach(order => {
-  console.log("Type of Order.consumer: ", typeof order.consumer); // Should be 'object' and contain name and email
-  console.log("Consumer object: ", order.consumer); // Check if consumer is populated correctly
-
-  const orderData = {
-    user: order.user, // The logged-in user (can be accessed from each order)
-    consumer: order.consumer ? new mongoose.Types.ObjectId(order.consumer._id) : null, // Correct access
-    orderDate: new Date(),
-  };
-
-  console.log("orderData: ", orderData);
-});
-
-  // Filter by product name if a query is provided
-  const filteredOrders = query
-    ? orders.filter((order) =>
-        order.items.some((item) =>
-          item.productId.name.toLowerCase().includes(query.toLowerCase())
-        )
-      )
-    : orders;
-
-  // Count total documents for pagination
-  const totalOrders = await OrdersModel.countDocuments();
+  const totalOrders = await OrdersModel.countDocuments(baseQuery);
   const hasMore = skip + limit < totalOrders;
 
-      // console.log("Filtered Orders:", filteredOrders);
-      // console.log("Total Orders:", totalOrders);
-      // console.log("Service orders", orders);
-
-  // Return the paginated and filtered orders
   return {
     data: orders,
     hasMore,
   };
 }
+
 
 
 static async deleteOrder(user,id) {

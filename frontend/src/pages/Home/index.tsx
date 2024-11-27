@@ -1,6 +1,6 @@
 import KPIAnalytics from "./components/KPI";
-// import PieChartDemo from "./components/Pie";
 import Chart from "./components/Chart";
+import OrdersReportDateWise from "./components/OrdersReportDateWise";
 
 const HomePage = () => {
   return (
@@ -9,10 +9,12 @@ const HomePage = () => {
       <div className="flex flex-wrap gap-6 justify-between">
         <div className="w-full lg:w-8/10">
           <KPIAnalytics />
-          
-      <Chart />
+          <Chart />
+          <div className="mt-8">
+          <OrdersReportDateWise />
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
