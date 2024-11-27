@@ -53,7 +53,7 @@ const ProductsPage = () => {
         <button onClick={() => setVisible(!visible)} className="px-5 py-2 bg-accent text-white rounded-lg">Add Product</button>
       </div>
       <form onSubmit={SearchHandler} className="mb-3 flex justify-end w-[90%] mx-auto">
-        <input value={Search} onChange={(e: any) => setSearch(e.target.value)} className="w-[90%] mx-auto lg:mx-0 lg:w-1/2 rounded-sm border py-3 px-5 outline-none" placeholder="Search Products" />
+        <input value={Search} onChange={(e: any) => setSearch(e.target.value)} className="w-[90%] mx-auto lg:mx-0 lg:w-1/2 rounded-lg border py-3 px-5 outline-none" placeholder="Search Products" />
       </form>
       <div className={`mb-3 flex ${(Number(SearchParams.get("page")) || 1) > 1 ? 'justify-between' : 'justify-end'} w-[90%] mx-auto`}>
         {(Number(SearchParams.get("page")) || 1) > 1 && <button onClick={onPrevPageHandler} title='Prev Page' className="text-black text-xl lg:text-3xl p-2"><BsArrowLeftCircle /></button>}

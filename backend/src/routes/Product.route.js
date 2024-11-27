@@ -11,6 +11,7 @@ router.use(Authentication);
 
 // Route to fetch all products (with optional search and pagination if implemented)
 router.get('/', ProductController.getProducts);
+router.get('/every', ProductController.getEveryProduct);
 
 // Route to fetch product statistics
 router.get('/stats', ProductController.getProductStats);

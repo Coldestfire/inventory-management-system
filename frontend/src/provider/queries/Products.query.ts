@@ -54,6 +54,17 @@ export const ProductApi = createApi({
       providesTags: ['Products'],
     }),
 
+    getEveryProduct: builder.query<GetAllProductsResponse, any>({
+      query: () => ({
+        url: `/products/every`,
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        },
+      }),
+      providesTags: ['Products'],
+    }),
+
     // Get a single product
     getProduct: builder.query<Product, string>({
       query: (id) => ({
@@ -132,6 +143,7 @@ export const ProductApi = createApi({
 
 export const {
   useGetAllProductsQuery,
+  useGetEveryProductQuery,
   useGetProductQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

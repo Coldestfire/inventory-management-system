@@ -62,7 +62,7 @@ const OrdersPage = () => {
         <input 
           value={Search} 
           onChange={(e: any) => setSearch(e.target.value)} 
-          className="w-[90%] mx-auto lg:mx-0 lg:w-1/2 rounded-sm border py-3 px-5 outline-none" 
+          className="w-[90%] mx-auto lg:mx-0 lg:w-1/2 rounded-lg border py-3 px-5 outline-none " 
           placeholder="Search Orders" 
         />
       </form>

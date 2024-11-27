@@ -4,15 +4,15 @@ import { toast } from 'sonner';
 import * as yup from 'yup';
 import { Button } from 'primereact/button';
 import Loader from '../../../components/Loader';
-import { useCreateProductMutation, useGetProductsForSearchQuery } from '../../../provider/queries/Products.query'; // <-- Import here
+import { useCreateProductMutation} from '../../../provider/queries/Products.query'; // <-- Import here
 
 const AddProductModel = ({ visible, setVisible }: any) => {
   const [createProduct, { isLoading, error }] = useCreateProductMutation();
 
-  // Fetch products for search/dropdown
-  const { data: products, isLoading: isProductsLoading, error: productsError } = useGetProductsForSearchQuery();
+
   
-  if (isLoading || isProductsLoading) {
+  
+  if (isLoading) {
     return <Loader />;
   }
 

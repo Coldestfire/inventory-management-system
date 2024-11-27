@@ -10,4 +10,3 @@ router.post("/login",AuthValidation.LoginUser,Validation,AuthController.LoginUse
 router.get("/profile",  Authentication,AuthController.ProfileController)
 
 module.exports = router
-

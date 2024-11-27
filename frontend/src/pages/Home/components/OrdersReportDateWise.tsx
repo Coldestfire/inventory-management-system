@@ -9,10 +9,12 @@ const OrdersReportDateWise = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const { data, isLoading, isError } = useGetAllOrdersQuery({
     query: "",
-    page: 1,
+    page: currentPage,
     startDate: startDate ? startDate.toISOString() : null,
     endDate: endDate ? endDate.toISOString() : null,
   });
@@ -43,6 +45,18 @@ const OrdersReportDateWise = () => {
     setDialogVisible(true);
   };
 
+  const handleNextPage = () => {
+    if (data?.hasMore) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
       <h2 className="text-xl font-semibold">Orders Report Date Wise</h2>
@@ -61,7 +75,7 @@ const OrdersReportDateWise = () => {
           dateFormat="dd/mm/yy"
           className="border-2 border-gray-200 rounded-lg outline-none"
         />
-        <button onClick={handleReset} className="bg-gray-200 px-4 py-2 rounded">
+        <button onClick={handleReset} className="bg-gray-300 px-4 py-2 rounded-lg">
           Reset
         </button>
       </div>
@@ -79,6 +93,22 @@ const OrdersReportDateWise = () => {
           </li>
         ))}
       </ul>
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className={`bg-gray-300 px-4 py-2 rounded ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={!data?.hasMore}
+          className={`bg-gray-300 px-4 py-2 rounded ${!data?.hasMore ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          Next
+        </button>
+      </div>
 
       {selectedOrder && (
         <Dialog

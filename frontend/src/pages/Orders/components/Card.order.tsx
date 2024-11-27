@@ -70,13 +70,13 @@ const TableCard = ({ data, id }: any) => {
 
         {/* Actions */}
         <td className="px-6 py-4 flex space-x-2">
-          <Button
+          {/* <Button
             onClick={() => setEditVisible(true)}
             title="Edit"
             className="p-4 bg-blue-500 text-white rounded-lg"
           >
             Edit
-          </Button>
+          </Button> */}
 
           <Button
             onClick={() => setVisible(!visible)}

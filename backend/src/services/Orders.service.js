@@ -74,8 +74,12 @@ class OrderService {
 
 
 static async getAllorders(user, page = 1, query = "", startDate = null, endDate = null) {
-  const limit = 10;
+  const limit = 5;
   const skip = (Number(page) - 1) * limit;
+
+  console.log({ user, page, query, startDate, endDate });
+  console.log({ skip, limit });
+
 
   // Build base query
   const baseQuery = { user: user };

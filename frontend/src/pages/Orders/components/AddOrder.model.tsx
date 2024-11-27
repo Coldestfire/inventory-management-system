@@ -8,12 +8,12 @@ import { Dropdown } from 'primereact/dropdown';
 import { FaTrashAlt } from "react-icons/fa";
 import Loader from '../../../components/Loader';
 import { useCreateOrderMutation } from '../../../provider/queries/Orders.query';
-import { useGetAllProductsQuery } from '../../../provider/queries/Products.query';
+import { useGetEveryProductQuery } from '../../../provider/queries/Products.query';
 
 const AddOrderModel = ({ visible, setVisible }: any) => { 
     const [CreateOrder] = useCreateOrderMutation();
     const { isLoading, isFetching, data } = useGetForSearchUserQuery({});
-    const { data: productData, isLoading: isProductLoading, isFetching: isProductFetching } = useGetAllProductsQuery({ query: '', page: 1 });
+    const { data: productData, isLoading: isProductLoading, isFetching: isProductFetching } = useGetEveryProductQuery({});
 
     console.log("Loading States:", { isLoading, isFetching, isProductLoading, isProductFetching });
 

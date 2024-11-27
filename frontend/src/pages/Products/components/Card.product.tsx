@@ -58,7 +58,7 @@ const TableCard = ({ data, id }: any) => {
           <Button
             onClick={showUpdateModal}
             title="Update"
-            className="p-4 bg-orange-400 text-white rounded-lg mx-2"
+            className="p-4 bg-orange-400 text-white rounded-lg mx-2 mt-2"
           >
             <FaRegEdit className="text-xl" />
           </Button>
@@ -68,7 +68,7 @@ const TableCard = ({ data, id }: any) => {
             loading={DeleteProductResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
             title="Delete"
-            className="p-4 bg-red-500 text-white rounded-lg mx-2"
+            className="p-4 bg-red-500 text-white rounded-lg mx-2 mt-2"
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>

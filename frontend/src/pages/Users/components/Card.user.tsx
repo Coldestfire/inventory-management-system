@@ -67,7 +67,7 @@ const TableCard = ({ data, id }: any) => {
           <button
             onClick={() => setVisible(!visible)}
             title="Edit"
-            className="p-4 bg-orange-400 text-white rounded-md mx-2"
+            className="p-4 bg-orange-400 text-white rounded-md mx-2 mt-2"
           >
             <FaRegEdit className="text-xl" />
           </button>
@@ -75,7 +75,7 @@ const TableCard = ({ data, id }: any) => {
             loading={DeleteConsumerResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
             title="Delete"
-            className="p-4 bg-red-500 text-white rounded-md mx-2"
+            className="p-4 bg-red-500 text-white rounded-md mx-2 mt-2"
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>

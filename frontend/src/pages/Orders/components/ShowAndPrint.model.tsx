@@ -11,6 +11,10 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
 
   const order = orderData?.data?.find((o: any) => o._id === id); // Filter order by ID
 
+console.log("Order Data:", orderData);
+console.log("Order ID:", id);
+console.log("Filtered Order:", order);
+
   const { toPDF, targetRef } = usePDF();
 
   if (isLoading) {
@@ -18,7 +22,7 @@ const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
   }
 
   if (isError || !order) {
-    return <div>Something went wrong or order not found.</div>;
+    return <div>X</div>;
   }
 
   // Calculate total price

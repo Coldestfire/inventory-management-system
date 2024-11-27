@@ -88,6 +88,37 @@ class ProductService {
     }
 
 
+    static async getEveryProduct(user) {
+        // Validate inputs
+        if (!user) {
+            throw new Error("User is required to fetch products.");
+        }
+    
+        try {
+            // Fetch all products for the user
+            const products = await ProductModel.find({ user }).sort({ createdAt: -1 });
+    
+            // Get total product count for the user
+            const totalCount = products.length;
+    
+            // Construct the response
+            const response = {
+                data: products,
+                total: totalCount,
+            };
+    
+            // Logging (optional, remove in production)
+            console.log("Response:", response);
+    
+            return response;
+        } catch (error) {
+            // Log and rethrow errors
+            console.error("Database error in getProducts:", error);
+            throw new Error("Failed to fetch products. Please try again.");
+        }
+    }
+    
+
   static async deleteProduct(user, productId) {
     const product = await ProductModel.findOneAndDelete({ _id: productId, user });
     if (!product) {

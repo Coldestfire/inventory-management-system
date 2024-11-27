@@ -3,12 +3,13 @@ const { UserModel,ProfileModel } = require("../models")
 const ApiError = require("../utils/ApiError")
 const { generatoken } = require("../utils/Token.utils")
 const axios =  require("axios");
-const bcrypt = require('bcryptjs');
 class AuthService{
-       static  async RegisterUser(body, token){
+       static  async RegisterUser(body){
 
-                const {email,password,name} = body
-             
+                // request
+                const {email,password,name,token} = body
+
+                // console.log("1---- ",token);
 
                 const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
                     params:{
@@ -18,11 +19,16 @@ class AuthService{
                 })
 
                 const data =await response.data;
+                // console.log("2---- ",JSON.stringify(data));
 
                 if(!data.success){
+                        // console.log("yhhh it works"); 
 
                         throw new ApiError(400,"Captcha Not Valid")
                 }
+
+
+
 
 
                 const checkExist = await UserModel.findOne({email})
@@ -31,12 +37,7 @@ class AuthService{
                     return
                 }
 
-                //encrypt password
-                const salt = await bcrypt.genSalt()
-
-
-                //creating new user
-                const user = await UserModel.create({
+            const user =     await UserModel.create({
                     email,password,name
                 })
 
@@ -55,8 +56,7 @@ class AuthService{
 
        }
         static  async LoginUser(body){
-        const {email,password,token} = body
-        // 
+        const {email,password,name,token} = body
 
         
                 const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`,{},{
@@ -66,9 +66,11 @@ class AuthService{
                 }
                 })
 
-                const data = await response.data;
+                const data =await response.data;
+                // console.log("2---- ",JSON.stringify(data));
 
                 if(!data.success){
+                        // console.log("yhhh it works"); 
 
                         throw new ApiError(400,"Captcha Not Valid")
                 }
@@ -79,11 +81,11 @@ class AuthService{
                 }
 
                 if(password !==checkExist.password){
-                throw new ApiError(400,"Invalid Password")
+ throw new ApiError(400,"Invalid Password")
                     return
                 }
              
-            const tokend = generatoken(checkExist) 
+   const tokend = generatoken(checkExist) 
               
                 return {
                     msg:"User Logged in Successfully",
@@ -93,12 +95,15 @@ class AuthService{
        }
          static  async ProfileService(user){ 
 
-                const checkExist = await UserModel.findById(user).select("name email")
+                      const checkExist = await UserModel.findById(user).select("name email")
                 if(!checkExist){
                     throw new ApiError(400,"User Not Registered")
                     return
                 }
+
+
    
+              
                 return {
                     msg:"Data fetched",
                     user:checkExist

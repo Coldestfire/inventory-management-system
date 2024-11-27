@@ -13,6 +13,11 @@ class ProductController {
         return res.status(200).json(products);
     });
 
+    static  getEveryProduct = CatchAsync(async (req, res) => {
+        const products = await ProductService.getEveryProduct(req.user);
+        return res.status(200).json(products);
+    });
+
     static updateProduct = CatchAsync(async (req, res) => {
         const product = await ProductService.updateById(req.params.id, req.body);
         return res.status(200).json(product);
