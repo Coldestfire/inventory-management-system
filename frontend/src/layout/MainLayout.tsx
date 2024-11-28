@@ -43,6 +43,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
               component={<Link to="/" />}
               icon={<MdOutlineSpaceDashboard className="text-2xl" />}
             >
+
               Dashboard
             </MenuItem>
             

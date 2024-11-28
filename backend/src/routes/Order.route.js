@@ -14,6 +14,9 @@ router.post('/create-order', OrdersController.createOrder);
 router.route("/get-orders")
     .get(OrdersController.getAllorders);
 
+router.route("/get-every-order")
+    .get(OrdersController.getEveryOrder);
+
 // Get invoice by ID route
 router.route("/get-invoice/:id")
     .get(OrdersController.getInvoiceById);

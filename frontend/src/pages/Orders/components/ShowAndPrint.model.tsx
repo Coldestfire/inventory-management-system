@@ -1,5 +1,5 @@
 import { Dialog } from 'primereact/dialog';
-import { useGetAllOrdersQuery } from '../../../provider/queries/Orders.query';
+import { useGetEveryOrderQuery } from '../../../provider/queries/Orders.query';
 import Loader from '../../../components/Loader';
 import moment from 'moment';
 import Barcode from 'react-barcode';
@@ -7,7 +7,7 @@ import { usePDF } from 'react-to-pdf';
 
 const ShowAndPrintModel = ({ setVisible, visible, id }: any) => {
   // Fetch all orders and filter the one with the given ID
-  const { data: orderData, isLoading, isError } = useGetAllOrdersQuery({ query: '', page: 1 });
+  const { data: orderData, isLoading, isError } = useGetEveryOrderQuery({});
 
   const order = orderData?.data?.find((o: any) => o._id === id); // Filter order by ID
 

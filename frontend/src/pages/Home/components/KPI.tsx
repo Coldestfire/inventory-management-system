@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useGetAllOrdersQuery } from "../../../provider/queries/Orders.query";
-import { useGetAllProductsQuery } from "../../../provider/queries/Products.query";
+import { useGetEveryOrderQuery } from "../../../provider/queries/Orders.query";
+import { useGetEveryProductQuery } from "../../../provider/queries/Products.query";
 import { useGetMostAppearedQuery } from "../../../provider/queries/Orders.query";
 import { Loader } from "lucide-react";
 
@@ -21,10 +21,10 @@ const KPIs = () => {
   const [mostAppeared, setMostAppeared] = useState({ productName: "", count: 0 });
 
   const { data: ordersData, isLoading: isOrdersLoading, isError: isOrdersError } =
-    useGetAllOrdersQuery({ query: "", page: 1 });
+    useGetEveryOrderQuery({});
 
   const { data: productsData, isLoading: isProductsLoading, isError: isProductsError } =
-    useGetAllProductsQuery({ query: "", page: 1 });
+    useGetEveryProductQuery({});
 
   const { data: mostAppearedData, isLoading: isMostAppearedLoading, isError: isMostAppearedError } =
     useGetMostAppearedQuery({});

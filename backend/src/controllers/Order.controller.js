@@ -23,6 +23,11 @@ class OrdersController {
     return res.status(200).json(orders);
   });
 
+  static getEveryOrder = CatchAsync(async (req, res) => {
+    const orders = await OrderService.getEveryOrder(req?.user);
+    return res.status(200).json(orders);
+  });
+
   static updateById = CatchAsync(async (req, res) => {
     const orders = await OrderService.updateById( req.params.id, req.body);
     return res.status(200).json(orders);

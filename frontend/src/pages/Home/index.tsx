@@ -2,7 +2,10 @@ import KPIAnalytics from "./components/KPI";
 import Chart from "./components/Chart";
 import OrdersReportDateWise from "./components/OrdersReportDateWise";
 
+
 const HomePage = () => {
+
+
   return (
     <div className="w-full flex flex-col gap-6 p-6 pt-0">
       {/* KPI and Pie Chart */}

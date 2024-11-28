@@ -116,6 +116,36 @@ static async getAllorders(user, page = 1, query = "", startDate = null, endDate 
   };
 }
 
+static async getEveryOrder(user) {
+  // Validate user input
+  if (!user) {
+    throw new Error("User is required to fetch orders.");
+  }
+
+  try {
+    // Fetch all orders for the user
+    const orders = await OrdersModel.find({ user })
+      .populate("consumer", "name email")
+      .populate("items.productId", "name description price")
+      .sort({ orderDate: -1 });
+
+    // Construct the response
+    const response = {
+      data: orders,
+      totalOrders: orders.length,
+    };
+
+    // Logging (optional, remove in production)
+    console.log("Response:", response);
+
+    return response;
+  } catch (error) {
+    // Log and rethrow errors
+    console.error("Database error in getAllOrders:", error);
+    throw new Error("Failed to fetch orders. Please try again.");
+  }
+}
+
 
 
 static async deleteOrder(user,id) {

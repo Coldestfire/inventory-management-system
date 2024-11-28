@@ -38,6 +38,17 @@ export const OrdersApi = createApi({
             },
             providesTags: ['getAllOrders'],
           }),
+
+          getEveryOrder: builder.query<any, any>({
+            query: () => ({
+                url: `/orders/get-every-order`,
+                method: 'GET',
+                headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                },
+              }),
+            providesTags: ['getAllOrders'],
+          }),
           
 
         updateById: builder.mutation<any, any>({
@@ -106,4 +117,4 @@ export const OrdersApi = createApi({
 })
 
 
-export const { useCreateOrderMutation,useGetAllOrdersQuery ,useUpdateByIdMutation , useDeleteOrderMutation ,useGetInvoiceByIdQuery, useGetMostAppearedQuery, useGetWeeklyRevenueQuery} = OrdersApi
+export const { useCreateOrderMutation,useGetAllOrdersQuery ,useGetEveryOrderQuery,useUpdateByIdMutation , useDeleteOrderMutation ,useGetInvoiceByIdQuery, useGetMostAppearedQuery, useGetWeeklyRevenueQuery} = OrdersApi

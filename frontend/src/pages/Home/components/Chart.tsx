@@ -1,6 +1,6 @@
 // import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from "recharts";
-import { useCreateOrderMutation, useGetWeeklyRevenueQuery } from "../../../provider/queries/Orders.query"; // Adjust the import path if needed
+import { useGetWeeklyRevenueQuery } from "../../../provider/queries/Orders.query"; // Adjust the import path if needed
 import Loader from "../../../components/Loader";
 
 const Chart = () => {
