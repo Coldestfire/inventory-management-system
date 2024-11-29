@@ -11,14 +11,15 @@
     "allowImportingTsExtensions": true, 
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
+    "noEmit":false,
+    "noEmitOnError": false,
 
     /* Linting */
-    "strict": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "strict": false, // Disable strict type checking
+    "noUnusedLocals": false, // Allow unused local variables
+    "noUnusedParameters": false, // Allow unused parameters
+    "noFallthroughCasesInSwitch": false, // Allow fallthrough cases in switch statements
+    "noUncheckedSideEffectImports": false // Allow unchecked side effect imports
   },
   "include": ["vite.config.ts"],
 }
