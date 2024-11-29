@@ -2,24 +2,20 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": ["ES2023"], 
     "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
+    "skipLibCheck": true, 
     "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true, 
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit":false,
-    "noEmitOnError": false,
-
-    /* Linting */
-    "strict": false, // Disable strict type checking
-    "noUnusedLocals": false, // Allow unused local variables
-    "noUnusedParameters": false, // Allow unused parameters
-    "noFallthroughCasesInSwitch": false, // Allow fallthrough cases in switch statements
-    "noUncheckedSideEffectImports": false // Allow unchecked side effect imports
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true, 
+    "moduleDetection": "force", 
+    "noEmit": false, 
+    "noEmitOnError": false, // Prevent halting builds due to errors
+    "strict": false, 
+    "noUnusedLocals": false, 
+    "noUnusedParameters": false, 
+    "noFallthroughCasesInSwitch": false,
+    "noUncheckedSideEffectImports": false 
   },
-  "include": ["vite.config.ts"],
+  "include": ["vite.config.ts"] // Include only the Vite configuration file
 }

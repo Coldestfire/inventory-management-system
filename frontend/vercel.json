@@ -1,3 +1,20 @@
 {
-    "rewrites" : [{"source" : "/(.*)", "destination" : "index.html"}]
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist" 
+      }
+    }
+  ],
+  "env": {
+    "SKIP_PREFLIGHT_CHECK": "true" 
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)", 
+      "destination": "/index.html" 
+    }
+  ]
 }
