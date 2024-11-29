@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch } from 'react-redux';
 import { collapsedSidebar, toggleSidebar } from '../provider/slice/Sidebar.slice';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { IoLogOutOutline } from 'react-icons/io5';
-import { removeUser, setUser } from '../provider/slice/user.slice';
+import { removeUser } from '../provider/slice/user.slice';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useGetProfileQuery } from '../provider/queries/Auth.query';

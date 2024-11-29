@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import { Chart } from "primereact/chart";
 import { useDashboardDataQuery } from "../../../provider/queries/Users.query";

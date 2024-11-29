@@ -12,7 +12,7 @@ const Chart = () => {
   const dispatch = useDispatch();
   const refreshKey = useSelector(selectRefreshKey);
 
-  const { data, isLoading, isError, error } = useGetWeeklyRevenueQuery(refreshKey);
+  const { data, isLoading, isError } = useGetWeeklyRevenueQuery(refreshKey);
 
   useEffect(() => {
     // Dispatch refresh action to update key whenever the component mounts
@@ -27,7 +27,7 @@ const Chart = () => {
   }
 
   if (isError) {
-    return <div>Failed to load chart data: {error?.message || "Unknown error"}</div>;
+    return <div>Failed to load chart data: {"Unknown error"}</div>;
   }
 
   // Reverse the data so recent dates appear on the right

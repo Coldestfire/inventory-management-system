@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useGetAllOrdersQuery } from "../../../provider/queries/Orders.query";
 import { Calendar } from "primereact/calendar";
@@ -10,7 +11,7 @@ const OrdersReportDateWise = () => {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+
 
   const { data, isLoading, isError } = useGetAllOrdersQuery({
     query: "",
