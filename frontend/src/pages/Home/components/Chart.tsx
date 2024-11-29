@@ -1,8 +1,8 @@
 // import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from "recharts";
 import { useGetWeeklyRevenueQuery } from "../../../provider/queries/Orders.query"; // Adjust the import path if needed
-import Loader from "../../../components/Loader";
-import { useEffect, useState } from "react";
+
+import { useEffect} from "react";
 import { triggerRefresh, selectRefreshKey } from "../../../provider/slice/refreshSlice";
 import { useDispatch, useSelector } from "react-redux";
 
