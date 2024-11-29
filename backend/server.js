@@ -11,5 +11,5 @@ ConnectDB()
 
 
 app.listen(PUBLIC_DATA.port,()=>{
-    console.log(`the app is listening at http://localhost:${PUBLIC_DATA.port}`);
+    console.log(`the app is listening at Local:${PUBLIC_DATA.port}`);
 })
