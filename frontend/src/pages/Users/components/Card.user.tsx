@@ -60,14 +60,14 @@ const TableCard = ({ data, id }: any) => {
           <button
             onClick={() => setViewVisible(!viewVisible)}
             title="View"
-            className="p-4 bg-teal-500 text-white rounded-md mx-2"
+            className="p-4 bg-[#4CAF50] text-white rounded-md mx-2 hover:bg-[#388E3C]" 
           >
             <LuView className="text-xl" />
           </button>
           <button
             onClick={() => setVisible(!visible)}
             title="Edit"
-            className="p-4 bg-orange-400 text-white rounded-md mx-2 mt-2"
+            className="p-4 bg-[#2196F3] hover:bg-[#1976D2] text-white rounded-md mx-2 mt-2"
           >
             <FaRegEdit className="text-xl" />
           </button>
@@ -75,7 +75,7 @@ const TableCard = ({ data, id }: any) => {
             loading={DeleteConsumerResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
             title="Delete"
-            className="p-4 bg-red-500 text-white rounded-md mx-2 mt-2"
+            className="p-4 bg-[#F44336] hover:bg-[#D32F2F] text-white rounded-md mx-2 mt-2"
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>

@@ -26,8 +26,8 @@ const navigate = useNavigate()
   }
 
   const validationSchema =yup.object({
-    email: yup.string().email("email must be valid").required("email is required"),
-    password: yup.string().min(5,"Password must be grather than 5 characters").required("password is required"),
+    email: yup.string().email("*Email must be valid").required("*Email is required"),
+    password: yup.string().min(6,"*Password must be greater than 6 characters").required("*Password is required"),
   })
 
   const OnSubmitHandler = async(e:User,{resetForm}:any)=>{
@@ -47,13 +47,13 @@ const navigate = useNavigate()
       localStorage.setItem("token", data.token);
 
       console.log("token: ", data.token);
-      
 
       toast.success("Logged in Successfully",{duration: 1000});   
       
 
       resetForm()
       navigate("/")
+      window.location.reload()
     } catch (error: any) {
       // toast
       toast.error(error.message);
@@ -94,13 +94,13 @@ const navigate = useNavigate()
                 <div className="mb-3 py-1">
                   <label htmlFor="email">Email</label>
                   <Field id='email' name='email' className='w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg' placeholder='Enter An Email Address' />
-                  <ErrorMessage component={'p'} className='text-red-500 text-sm ' name='email' />
+                  <ErrorMessage component={'p'} className='text-red-500 text-md' name='email' />
                 </div>
                 <div className="mb-3 py-1">
                   <label htmlFor="password">Password</label>
 
                   <Field name='password' id='password' className='w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg' placeholder='*********' />
-                  <ErrorMessage component={'p'} className='text-red-500 text-sm ' name='password' />
+                  <ErrorMessage component={'p'} className='text-red-500 text-md ' name='password' />
 
                 </div>
                 <div className="mb-3 py-1">

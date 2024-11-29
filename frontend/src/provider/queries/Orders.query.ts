@@ -107,6 +107,7 @@ export const OrdersApi = createApi({
             query: () => ({
                 url: '/orders/weekly-revenue/' ,
                 method: 'GET', 
+                refetchOnMountOrArgChange: true,
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem("token")
                 }

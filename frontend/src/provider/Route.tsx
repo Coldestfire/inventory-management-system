@@ -25,7 +25,8 @@ export const Routes = createBrowserRouter([
 
             {
                 path:'/',
-                Component: HomePage
+                // Component: HomePage,
+                Component: () => <HomePage key={Date.now()} />, // Add a dynamic key here
             },
             {
                 path: '/invoice',

@@ -80,8 +80,8 @@ const TableCard = ({ data, id }: any) => {
 
           <Button
             onClick={() => setVisible(!visible)}
-            title="View"
-            className="p-4 bg-teal-500 text-white rounded-lg"
+            title="Print"
+            className="p-4 bg-[#FF9800] hover:bg-[#F57C00] text-white rounded-lg"
           >
             <BsPrinter className="text-xl" />
           </Button>
@@ -90,7 +90,7 @@ const TableCard = ({ data, id }: any) => {
             loading={DeleteOrderResponse.isLoading}
             onClick={() => deleteHandler(data._id)}
             title="Delete"
-            className="p-4 bg-red-500 text-white rounded-lg"
+            className="p-4 bg-[#F44336] hover:bg-[#D32F2F] text-white rounded-lg"
           >
             <FaRegTrashAlt className="text-xl" />
           </Button>

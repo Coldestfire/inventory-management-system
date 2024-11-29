@@ -26,7 +26,7 @@ function App() {
           }
         })
 
-        console.log(data.user);
+        console.log("app: ", data.user.email);
         dispatch(setUser(data.user));
 
 
@@ -34,8 +34,8 @@ function App() {
         return
       } catch (error) {
         console.log(error);
-
         navigate("/login")
+
         return
       }
 

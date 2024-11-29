@@ -7,3 +7,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .ui-datepicker td span, .ui-datepicker td a {
+    padding: 0px;
+} */
+
+.p-inputtext{
+    padding: 10px !important;
+}

@@ -6,6 +6,7 @@ import { AuthApi } from "./queries/Auth.query";
 import { UserApi } from "./queries/Users.query";
 import { OrdersApi } from "./queries/Orders.query";
 import { ProductApi } from "./queries/Products.query";
+import refreshReducer from "./slice/refreshSlice";
 
 export const store = configureStore({
     reducer:{
@@ -14,7 +15,9 @@ export const store = configureStore({
         [AuthApi.reducerPath]: AuthApi.reducer,
         [UserApi.reducerPath]: UserApi.reducer,
         [OrdersApi.reducerPath]: OrdersApi.reducer,
-        [ProductApi.reducerPath]: ProductApi.reducer
+        [ProductApi.reducerPath]: ProductApi.reducer,
+        refresh: refreshReducer,
+        
     },
 
    

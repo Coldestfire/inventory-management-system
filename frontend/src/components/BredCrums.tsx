@@ -6,7 +6,7 @@ const BredCrums = ({ PageName, PageLink }: { PageName:string, PageLink:string })
                     <div className=" w-[96%] lg:w-[90%] mx-auto     my-10 flex items-center justify-between">
               <h1 className='text-4xl font-semibold leading-tight'>{PageName}</h1>
                                 <ul className="flex items-center gap-x-2 text-blue-500">
-                  <li><span >Dashboard</span></li>
+                  <li><Link to="/"> Dashboard</Link></li>
                   <li><span >/</span></li>
                   <li><Link to={PageLink}>{PageName}</Link></li>
                                 </ul>

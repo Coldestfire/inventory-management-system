@@ -122,6 +122,8 @@ static async getEveryOrder(user) {
     throw new Error("User is required to fetch orders.");
   }
 
+  console.log(user)
+
   try {
     // Fetch all orders for the user
     const orders = await OrdersModel.find({ user })

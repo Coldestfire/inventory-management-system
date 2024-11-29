@@ -18,8 +18,17 @@ export const AuthApi = createApi({
                 body: obj
             })
         }),
+        getProfile: builder.query<any, any>({
+            query: () => ({
+                url: '/auth/profile',
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                  }
+            })
+        }),
     }),
 })
 
 
-export const { useRegisterUserMutation,useLoginUserMutation } = AuthApi
+export const { useRegisterUserMutation,useLoginUserMutation, useGetProfileQuery } = AuthApi

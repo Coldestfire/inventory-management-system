@@ -31,9 +31,9 @@ const Register = () => {
   }
 
   const validationSchema = yup.object({
-    name: yup.string(). required("Name is required"),
-    email: yup.string().email("email must be valid").required("email is required"),
-    password: yup.string().min(5, "Password must be grather than 5 characters").required("password is required"),
+    name: yup.string(). required("*Name is required"),
+    email: yup.string().email("*Email must be valid").required("*Email is required"),
+    password: yup.string().min(6, "*Password must be greater than 6 characters").required("*Password is required"),
   })
 
   const OnSubmitHandler = async (e: User, { resetForm }: any) => {
@@ -102,7 +102,7 @@ const Register = () => {
                 className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
                 placeholder="Enter Email Address"
               />
-              <ErrorMessage component="p" className="text-red-500 text-sm" name="name" />
+              <ErrorMessage component="p" className="text-red-500 text-md" name="name" />
             </div>
   
             <div className="mb-3 py-1">
@@ -113,7 +113,7 @@ const Register = () => {
                 className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
                 placeholder="Enter Email Address"
               />
-              <ErrorMessage component="p" className="text-red-500 text-sm" name="email" />
+              <ErrorMessage component="p" className="text-red-500 text-md" name="email" />
             </div>
   
             <div className="mb-3 py-1">
@@ -124,7 +124,7 @@ const Register = () => {
                 className="w-full outline-none py-3 px-2 border-[.1px] border-zinc-400 rounded-lg"
                 placeholder="*****"
               />
-              <ErrorMessage component="p" className="text-red-500 text-sm" name="password" />
+              <ErrorMessage component="p" className="text-red-500 text-md" name="password" />
             </div>
   
             <div className="mb-3 py-1">
